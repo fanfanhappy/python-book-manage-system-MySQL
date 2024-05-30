@@ -4,7 +4,7 @@ import datetime
 
 def ShowList(conn,CardNum):
     if(CardNum==""):
-        return "借书证号不能为空"
+        return "借书证号 不能为空"
     try:
         cursor=conn.cursor()
         sql="select * from card where cnum=%s"
