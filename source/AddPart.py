@@ -91,7 +91,7 @@ def AddBatch(conn,file_addr):
         with open(file_addr,"r",encoding="utf8") as f:
             for line in f.readlines():
                 str1=line.strip('\n')#用来添加到列表里，保持原始格式
-                str2=line.strip('()\n').split(',')#用来取出各个属性值
+                str2=line.strip('()\n').split(',')#用来  取出各个属性值
                 if len(str2)!=8:
                     fail_list.append(str1)
                     break
