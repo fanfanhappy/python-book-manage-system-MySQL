@@ -1,10 +1,52 @@
+
+import tkinter as tk
+from tkinter import messagebox
+
+# 登录功能的实现
+class LoginFrame(tk.Frame):
+    def __init__(self, master):
+        super().__init__(master)
+        self.master = master
+        self.master.title("登录")
+        self.pack()
+        self.create_widgets()
+
+    def create_widgets(self):
+        tk.Label(self, text="用户名:").grid(row=0, column=0)
+        self.username_entry = tk.Entry(self)
+        self.username_entry.grid(row=0, column=1)
+
+        tk.Label(self, text="密码:").grid(row=1, column=0)
+        self.password_entry = tk.Entry(self, show="*")
+        self.password_entry.grid(row=1, column=1)
+
+        self.login_button = tk.Button(self, text="登录", command=self.login)
+        self.login_button.grid(row=2, column=0, columnspan=2)
+
+    def login(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM 用户 WHERE 用户名 = %s AND 密码 = %s", (username, password))
+
+        # 在这里执行登录验证逻辑，比如连接数据库验证用户名和密码
+        if cursor.fetchone():
+            messagebox.showinfo("登录成功", "登录成功！")
+            basedesk(self.master)
+            self.destroy()
+        else:
+            messagebox.showerror("登录失败", "用户名或密码错误！")
+
 class basedesk():
     def __init__(self, master):
+
         self.root = master
         self.root.title('图书管理系统')
         self.root.geometry('1000x700')
 
+
         initwin(self.root)
+
 
 
 class initwin():  # 主窗口
@@ -39,7 +81,7 @@ class initwin():  # 主窗口
         self.canvas.create_window(100, 200, width=200, height=40, window=btn_return)
 
         self.title = tk.Label(self.initwin, text="图书管理系统", font=("微软雅黑", 30))
-        self.author = tk.Label(self.initwin, text="范才国 5720210804", font=("微软雅黑", 24))
+        self.author = tk.Label(self.initwin, text="", font=("微软雅黑", 24))
         self.canvas.create_window(400, 150, anchor="nw", width=300, height=70, window=self.title)
         self.canvas.create_window(400, 350, anchor="nw", window=self.author)
 
@@ -814,14 +856,16 @@ class returnwin():
 
 
 def StartGui():
-    root = tk.Tk()
-    basedesk(root)
-    root.mainloop()
 
+    root = tk.Tk()
+    LoginFrame(root)
+
+    #basedesk(root)
+    root.mainloop()
 
 if __name__ == "__main__":
     import tkinter as tk
-    from tkinter import scrolledtext, END
+    from tkinter import scrolledtext, END, messagebox
     from tkinter import ttk
     from PIL import Image, ImageTk
     import AddPart
@@ -849,4 +893,6 @@ if __name__ == "__main__":
         )
     except Exception as e:
         logging.exception(e)
+
+
     StartGui()
